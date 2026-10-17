@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Board Squareness Calculator</title>
+style.css
+</head>
+
+<body>
+
+<h1>BOARD SQUARENESS CALCULATOR</h1>
+
+<div class="card">
+
+<label>Length</label>
+<select id="length">
+    <option>72</option>
+    <option>96</option>
+    <option>108</option>
+    <option>120</option>
+    <option>144</option>
+    <option>168</option>
+    <option>192</option>
+</select>
+
+<label>Custom Length</label>
+<input id="customLength" type="number">
+
+<p id="usingLength">Using Length: 72"</p>
+
+<label>Width</label>
+<select id="width">
+    <option>48</option>
+    <option>54</option>
+</select>
+
+<label>Tolerance</label>
+<input id="tolerance" value="3/32">
+
+<label>Diagonal 1</label>
+<input id="diag1">
+
+<label>Diagonal 2</label>
+<input id="diag2">
+
+<button onclick="calculate()">CALCULATE</button>
+
+<div id="resultBox">
+    READY
+</div>
+
+<p id="difference"></p>
+<p id="outSquare"></p>
+<p id="perfectDiagonal"></p>
+
+<hr>
+
+<h2>Fraction → Decimal</h2>
+
+<input id="fractionInput" placeholder="107 1/16">
+
+<button onclick="convertFraction()">
+Convert
+</button>
+
+<p id="decimalOutput"></p>
+
+<hr>
+
+<button onclick="showCheatSheet()">
+Tape Cheat Sheet
+</button>
+
+</div>
+
+
+<div id="cheatSheet" class="modal">
+
+<div class="modal-content">
+
+<span class="close"
+onclick="closeCheatSheet()">&times;</span>
+
+<h2>Tape Measure Cheat Sheet</h2>
+
+<pre>
+1/16  = 0.0625
+1/8   = 0.1250
+3/16  = 0.1875
+1/4   = 0.2500
+5/16  = 0.3125
+3/8   = 0.3750
+7/16  = 0.4375
+1/2   = 0.5000
+9/16  = 0.5625
+5/8   = 0.6250
+11/16 = 0.6875
+3/4   = 0.7500
+13/16 = 0.8125
+7/8   = 0.8750
+15/16 = 0.9375
+</pre>
+
+</div>
+
+</div>
+
+script.jsscript>
+
+</body>
+</html>
