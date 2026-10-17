@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,9 @@
 <label>Custom Length</label>
 <input id="customLength" type="number">
 
-<p id="usingLength">Using Length: 72"</p>
+<p id="usingLength">
+Using Length: 72"
+</p>
 
 <label>Width</label>
 <select id="width">
@@ -50,7 +53,9 @@ Tolerance: 3/32 (0.0938)
 <label>Diagonal 2</label>
 <input id="diag2" placeholder="107 1/4">
 
-<button onclick="calculate()">CALCULATE</button>
+<button onclick="calculate()">
+CALCULATE
+</button>
 
 <div id="resultBox">
 READY
@@ -64,7 +69,9 @@ READY
 
 <h2>Fraction → Decimal Converter</h2>
 
-<input id="fractionInput" placeholder="107 1/16">
+<input
+    id="fractionInput"
+    placeholder="107 1/16">
 
 <button onclick="convertFraction()">
 CONVERT
@@ -80,32 +87,64 @@ TAPE CHEAT SHEET
 
 </div>
 
+<!-- Cheat Sheet Window -->
 
 <div id="cheatSheet" class="modal">
 
 <div class="modal-content">
 
-<span class="close"
-onclick="closeCheatSheet()">&times;</span>
+<span
+class="close"
+onclick="closeCheatSheet()">
+&times;
+</span>
 
 <h2>Tape Measure Cheat Sheet</h2>
 
 <pre>
-1/16  = 0.0625
-1/8   = 0.1250
-3/16  = 0.1875
-1/4   = 0.2500
-5/16  = 0.3125
-3/8   = 0.3750
-7/16  = 0.4375
-1/2   = 0.5000
-9/16  = 0.5625
-5/8   = 0.6250
-11/16 = 0.6875
-3/4   = 0.7500
-13/16 = 0.8125
-7/8   = 0.8750
-15/16 = 0.9375
+Fraction   Decimal
+
+1/32   = 0.0313
+1/16   = 0.0625
+3/32   = 0.0938
+1/8    = 0.1250
+5/32   = 0.1563
+3/16   = 0.1875
+7/32   = 0.2188
+1/4    = 0.2500
+9/32   = 0.2813
+5/16   = 0.3125
+11/32  = 0.3438
+3/8    = 0.3750
+13/32  = 0.4063
+7/16   = 0.4375
+15/32  = 0.4688
+1/2    = 0.5000
+17/32  = 0.5313
+9/16   = 0.5625
+19/32  = 0.5938
+5/8    = 0.6250
+21/32  = 0.6563
+11/16  = 0.6875
+23/32  = 0.7188
+3/4    = 0.7500
+25/32  = 0.7813
+13/16  = 0.8125
+27/32  = 0.8438
+7/8    = 0.8750
+29/32  = 0.9063
+15/16  = 0.9375
+31/32  = 0.9688
+
+
+Tolerance Reference
+
+1/32 = 0.0313
+3/32 = 0.0938  ← Default Tolerance
+1/16 = 0.0625
+1/8  = 0.1250
+3/16 = 0.1875
+1/4  = 0.2500
 </pre>
 
 </div>
@@ -116,3 +155,4 @@ onclick="closeCheatSheet()">&times;</span>
 
 </body>
 </html>
+``
