@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Board Squareness Calculator</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>BOARD SQUARENESS CALCULATOR</h1>
-
 <div class="card">
+
+<h1>BOARD SQUARENESS CALCULATOR</h1>
 
 <label>Length</label>
 <select id="length">
-    <option>72</option>
-    <option>96</option>
-    <option>108</option>
-    <option>120</option>
-    <option>144</option>
-    <option>168</option>
-    <option>192</option>
+    <option value="72">72"</option>
+    <option value="96">96"</option>
+    <option value="108">108"</option>
+    <option value="120">120"</option>
+    <option value="144">144"</option>
+    <option value="168">168"</option>
+    <option value="192">192"</option>
 </select>
 
 <label>Custom Length</label>
@@ -31,23 +33,27 @@
 
 <label>Width</label>
 <select id="width">
-    <option>48</option>
-    <option>54</option>
+    <option value="48">48"</option>
+    <option value="54">54"</option>
 </select>
 
 <label>Tolerance</label>
 <input id="tolerance" value="3/32">
 
+<p id="toleranceDisplay">
+Tolerance: 3/32 (0.0938)
+</p>
+
 <label>Diagonal 1</label>
-<input id="diag1">
+<input id="diag1" placeholder="107 1/16">
 
 <label>Diagonal 2</label>
-<input id="diag2">
+<input id="diag2" placeholder="107 1/4">
 
 <button onclick="calculate()">CALCULATE</button>
 
 <div id="resultBox">
-    READY
+READY
 </div>
 
 <p id="difference"></p>
@@ -56,12 +62,12 @@
 
 <hr>
 
-<h2>Fraction → Decimal</h2>
+<h2>Fraction → Decimal Converter</h2>
 
 <input id="fractionInput" placeholder="107 1/16">
 
 <button onclick="convertFraction()">
-Convert
+CONVERT
 </button>
 
 <p id="decimalOutput"></p>
@@ -69,7 +75,7 @@ Convert
 <hr>
 
 <button onclick="showCheatSheet()">
-Tape Cheat Sheet
+TAPE CHEAT SHEET
 </button>
 
 </div>
