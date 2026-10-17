@@ -5,6 +5,17 @@ const lengthBox =
 document.getElementById("length");
 
 customLength.addEventListener("input", () =>
+    lengthBox.addEventListener("change", () =>
+{
+    if(customLength.value === "")
+    {
+        document.getElementById(
+            "usingLength"
+        ).innerText =
+        `Using Length: ${lengthBox.value}"`;
+    }
+});
+
 {
     if(customLength.value !== "")
     {
