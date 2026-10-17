@@ -105,6 +105,47 @@ toleranceBox.addEventListener(
     updateToleranceDisplay
 );
 
+function saveHistoryRecord(
+    length,
+    width,
+    d1,
+    d2,
+    difference,
+    outSquare,
+    result
+)
+{
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "boardHistory"
+            )
+        ) || [];
+
+    history.unshift({
+        date:
+            new Date().toLocaleString(),
+
+        length,
+        width,
+        d1,
+        d2,
+
+        difference:
+            difference.toFixed(4),
+
+        outSquare:
+            outSquare.toFixed(4),
+
+        result
+    });
+
+    localStorage.setItem(
+        "boardHistory",
+        JSON.stringify(history)
+    );
+}
+
 function calculate()
 {
     try
@@ -169,6 +210,7 @@ function calculate()
         ).innerText =
         `Perfect Diagonal: ${perfect.toFixed(4)}"`;
 
+        let result;
         let resultBox =
             document.getElementById(
                 "resultBox"
@@ -176,20 +218,40 @@ function calculate()
 
         if(difference <= tolerance)
         {
+            result = "PASS";
+
             resultBox.innerText =
-                "PASS";
+                result;
 
             resultBox.style.background =
                 "green";
         }
         else
         {
+            result = "FAIL";
+
             resultBox.innerText =
-                "FAIL";
+                result;
 
             resultBox.style.background =
                 "red";
         }
+
+        saveHistoryRecord(
+            length,
+            width,
+            document.getElementById(
+                "diag1"
+            ).value,
+
+            document.getElementById(
+                "diag2"
+            ).value,
+
+            difference,
+            outSquare,
+            result
+        );
     }
     catch
     {
@@ -237,6 +299,94 @@ function closeCheatSheet()
         "cheatSheet"
     ).style.display =
         "none";
+}
+
+function showHistory()
+{
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "boardHistory"
+            )
+        ) || [];
+
+    let html = "";
+
+    if(history.length === 0)
+    {
+        html =
+        "No history saved.";
+    }
+    else
+    {
+        history.forEach(item =>
+        {
+            html += `
+            <div style="
+            border-bottom:1px solid #ccc;
+            margin-bottom:10px;
+            padding-bottom:10px;">
+
+            <strong>${item.date}</strong><br>
+
+            Length:
+            ${item.length}"<br>
+
+            Width:
+            ${item.width}"<br>
+
+            Diagonal 1:
+            ${item.d1}<br>
+
+            Diagonal 2:
+            ${item.d2}<br>
+
+            Difference:
+            ${item.difference}"<br>
+
+            Out Of Square:
+            ${item.outSquare}"<br>
+
+            Result:
+            <strong>${item.result}</strong>
+
+            </div>`;
+        });
+    }
+
+    document.getElementById(
+        "historyContent"
+    ).innerHTML =
+    html;
+
+    document.getElementById(
+        "historyModal"
+    ).style.display =
+    "block";
+}
+
+function closeHistory()
+{
+    document.getElementById(
+        "historyModal"
+    ).style.display =
+    "none";
+}
+
+function clearHistory()
+{
+    if(confirm(
+        "Clear all history?"
+    ))
+    {
+        localStorage.removeItem(
+            "boardHistory"
+        );
+
+        alert(
+            "History cleared."
+        );
+    }
 }
 
 updateLengthDisplay();
