@@ -2,104 +2,154 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>Board Squareness Calculator</title>
+    <title>Board Squareness Calculator</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="card">
 
-<h1>BOARD SQUARENESS CALCULATOR</h1>
+    <h1>BOARD SQUARENESS CALCULATOR</h1>
 
-<label>Length</label>
-<select id="length">
-    <option value="72">72"</option>
-    <option value="96">96"</option>
-    <option value="108">108"</option>
-    <option value="120">120"</option>
-    <option value="144">144"</option>
-    <option value="168">168"</option>
-    <option value="192">192"</option>
-</select>
+    <label>Length</label>
 
-<label>Custom Length</label>
-<input id="customLength" type="number">
+    <select id="length">
+        <option value="72">72"</option>
+        <option value="96">96"</option>
+        <option value="108">108"</option>
+        <option value="120">120"</option>
+        <option value="144">144"</option>
+        <option value="168">168"</option>
+        <option value="192">192"</option>
+    </select>
 
-<p id="usingLength">
-Using Length: 72"
-</p>
+    <label>Custom Length</label>
 
-<label>Width</label>
-<select id="width">
-    <option value="48">48"</option>
-    <option value="54">54"</option>
-</select>
+    <input
+        id="customLength"
+        type="number"
+        placeholder="Enter custom length">
 
-<label>Tolerance</label>
-<input id="tolerance" value="3/32">
+    <p id="usingLength">
+        Using Length: 72"
+    </p>
 
-<p id="toleranceDisplay">
-Tolerance: 3/32 (0.0938)
-</p>
+    <label>Width</label>
 
-<label>Diagonal 1</label>
-<input id="diag1" placeholder="107 1/16">
+    <select id="width">
+        <option value="48">48"</option>
+        <option value="54">54"</option>
+    </select>
 
-<label>Diagonal 2</label>
-<input id="diag2" placeholder="107 1/4">
+    <label>Tolerance</label>
 
-<button onclick="calculate()">
-CALCULATE
-</button>
+    <input
+        id="tolerance"
+        value="3/32">
 
-<div id="resultBox">
-READY
+    <p id="toleranceDisplay">
+        Tolerance: 3/32 (0.0938)
+    </p>
+
+    <label>Diagonal 1</label>
+
+    <input
+        id="diag1"
+        placeholder="107 1/16">
+
+    <label>Diagonal 2</label>
+
+    <input
+        id="diag2"
+        placeholder="107 1/4">
+
+    <button onclick="calculate()">
+        CALCULATE
+    </button>
+
+    <button onclick="showHistory()">
+        HISTORY
+    </button>
+
+    <button onclick="clearHistory()">
+        CLEAR HISTORY
+    </button>
+
+    <div id="resultBox">
+        READY
+    </div>
+
+    <p id="difference"></p>
+
+    <p id="outSquare"></p>
+
+    <p id="perfectDiagonal"></p>
+
+    <hr>
+
+    <h2>Fraction → Decimal Converter</h2>
+
+    <input
+        id="fractionInput"
+        placeholder="107 1/16">
+
+    <button onclick="convertFraction()">
+        CONVERT
+    </button>
+
+    <p id="decimalOutput"></p>
+
+    <hr>
+
+    <button onclick="showCheatSheet()">
+        TAPE CHEAT SHEET
+    </button>
+
 </div>
 
-<p id="difference"></p>
-<p id="outSquare"></p>
-<p id="perfectDiagonal"></p>
+<!-- HISTORY WINDOW -->
 
-<hr>
+<div id="historyModal"
+     class="modal">
 
-<h2>Fraction → Decimal Converter</h2>
+    <div class="modal-content">
 
-<input
-    id="fractionInput"
-    placeholder="107 1/16">
+        <span
+            class="close"
+            onclick="closeHistory()">
+            &times;
+        </span>
 
-<button onclick="convertFraction()">
-CONVERT
-</button>
+        <h2>History</h2>
 
-<p id="decimalOutput"></p>
+        <div id="historyContent">
+            No history yet.
+        </div>
 
-<hr>
-
-<button onclick="showCheatSheet()">
-TAPE CHEAT SHEET
-</button>
+    </div>
 
 </div>
 
-<!-- Cheat Sheet Window -->
+<!-- TAPE CHEAT SHEET -->
 
-<div id="cheatSheet" class="modal">
+<div id="cheatSheet"
+     class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<span
-class="close"
-onclick="closeCheatSheet()">
-&times;
-</span>
+        <span
+            class="close"
+            onclick="closeCheatSheet()">
+            &times;
+        </span>
 
-<h2>Tape Measure Cheat Sheet</h2>
+        <h2>Tape Measure Cheat Sheet</h2>
 
 <pre>
 Fraction   Decimal
@@ -139,20 +189,4 @@ Fraction   Decimal
 
 Tolerance Reference
 
-1/32 = 0.0313
-3/32 = 0.0938  ← Default Tolerance
-1/16 = 0.0625
-1/8  = 0.1250
-3/16 = 0.1875
-1/4  = 0.2500
-</pre>
-
-</div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-``
+1/32 = 0.
