@@ -4,48 +4,20 @@ document.getElementById("customLength");
 const lengthBox =
 document.getElementById("length");
 
-customLength.addEventListener("input", () =>
-    lengthBox.addEventListener("change", () =>
-{
-    if(customLength.value === "")
-    {
-        document.getElementById(
-            "usingLength"
-        ).innerText =
-        `Using Length: ${lengthBox.value}"`;
-    }
-});
+const toleranceBox =
+document.getElementById("tolerance");
 
-{
-    if(customLength.value !== "")
-    {
-        lengthBox.disabled = true;
 
-        document.getElementById(
-            "usingLength"
-        ).innerText =
-        `Using Length: ${customLength.value}"`;
-    }
-    else
-    {
-        lengthBox.disabled = false;
-
-        document.getElementById(
-            "usingLength"
-        ).innerText =
-        `Using Length: ${lengthBox.value}"`;
-    }
-});
 
 function parseMeasurement(value)
 {
     value = value.trim();
 
-    if(value.includes("/"))
+    if (value.includes("/"))
     {
         let parts = value.split(" ");
 
-        if(parts.length === 2)
+        if (parts.length === 2)
         {
             let whole =
                 parseFloat(parts[0]);
@@ -68,6 +40,76 @@ function parseMeasurement(value)
     return parseFloat(value);
 }
 
+
+
+function updateLengthDisplay()
+{
+    const usingLength =
+        document.getElementById(
+            "usingLength"
+        );
+
+    if (customLength.value !== "")
+    {
+        lengthBox.disabled = true;
+
+        usingLength.innerText =
+            `Using Length: ${customLength.value}"`;
+    }
+    else
+    {
+        lengthBox.disabled = false;
+
+        usingLength.innerText =
+            `Using Length: ${lengthBox.value}"`;
+    }
+}
+
+
+
+function updateToleranceDisplay()
+{
+    const display =
+        document.getElementById(
+            "toleranceDisplay"
+        );
+
+    try
+    {
+        let tolerance =
+            parseMeasurement(
+                toleranceBox.value
+            );
+
+        display.innerText =
+            `Tolerance: ${toleranceBox.value} (${tolerance.toFixed(4)})`;
+    }
+    catch
+    {
+        display.innerText =
+            "Tolerance: Invalid";
+    }
+}
+
+
+
+customLength.addEventListener(
+    "input",
+    updateLengthDisplay
+);
+
+lengthBox.addEventListener(
+    "change",
+    updateLengthDisplay
+);
+
+toleranceBox.addEventListener(
+    "input",
+    updateToleranceDisplay
+);
+
+
+
 function calculate()
 {
     try
@@ -88,9 +130,7 @@ function calculate()
 
         let tolerance =
             parseMeasurement(
-                document.getElementById(
-                    "tolerance"
-                ).value
+                toleranceBox.value
             );
 
         let d1 =
@@ -108,89 +148,23 @@ function calculate()
             );
 
         let difference =
-            Math.abs(d1-d2);
+            Math.abs(d1 - d2);
 
         let outSquare =
-            difference/2;
+            difference / 2;
 
         let perfect =
             Math.sqrt(
-                length*length +
-                width*width
+                length * length +
+                width * width
             );
 
         document.getElementById(
             "difference"
         ).innerText =
-        "Difference: " +
-        difference.toFixed(4);
+            `Difference: ${difference.toFixed(4)}"`;
 
         document.getElementById(
             "outSquare"
         ).innerText =
-        "Out Of Square: " +
-        outSquare.toFixed(4);
-
-        document.getElementById(
-            "perfectDiagonal"
-        ).innerText =
-        "Perfect Diagonal: " +
-        perfect.toFixed(4);
-
-        let pass =
-            difference <= tolerance;
-
-        let box =
-            document.getElementById(
-                "resultBox"
-            );
-
-        if(pass)
-        {
-            box.innerText = "PASS";
-            box.style.background =
-            "green";
-        }
-        else
-        {
-            box.innerText = "FAIL";
-            box.style.background =
-            "red";
-        }
-    }
-    catch
-    {
-        alert(
-          "Please enter valid values."
-        );
-    }
-}
-
-function convertFraction()
-{
-    let result =
-        parseMeasurement(
-            document.getElementById(
-                "fractionInput"
-            ).value
-        );
-
-    document.getElementById(
-        "decimalOutput"
-    ).innerText =
-    result.toFixed(4);
-}
-
-function showCheatSheet()
-{
-    document.getElementById(
-        "cheatSheet"
-    ).style.display="block";
-}
-
-function closeCheatSheet()
-{
-    document.getElementById(
-        "cheatSheet"
-    ).style.display="none";
-}
+            `Out Of Square: ${outSquare.toFixed(4)}"`;
