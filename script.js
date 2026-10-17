@@ -7,17 +7,20 @@ document.getElementById("length");
 const toleranceBox =
 document.getElementById("tolerance");
 
-
-
 function parseMeasurement(value)
 {
     value = value.trim();
 
-    if (value.includes("/"))
+    if(value === "")
+    {
+        throw new Error();
+    }
+
+    if(value.includes("/"))
     {
         let parts = value.split(" ");
 
-        if (parts.length === 2)
+        if(parts.length === 2)
         {
             let whole =
                 parseFloat(parts[0]);
@@ -26,8 +29,10 @@ function parseMeasurement(value)
                 parts[1].split("/");
 
             return whole +
-                parseFloat(frac[0]) /
-                parseFloat(frac[1]);
+                (
+                    parseFloat(frac[0]) /
+                    parseFloat(frac[1])
+                );
         }
 
         let frac =
@@ -40,40 +45,30 @@ function parseMeasurement(value)
     return parseFloat(value);
 }
 
-
-
 function updateLengthDisplay()
 {
-    const usingLength =
-        document.getElementById(
-            "usingLength"
-        );
-
-    if (customLength.value !== "")
+    if(customLength.value !== "")
     {
         lengthBox.disabled = true;
 
-        usingLength.innerText =
-            `Using Length: ${customLength.value}"`;
+        document.getElementById(
+            "usingLength"
+        ).innerText =
+        `Using Length: ${customLength.value}"`;
     }
     else
     {
         lengthBox.disabled = false;
 
-        usingLength.innerText =
-            `Using Length: ${lengthBox.value}"`;
+        document.getElementById(
+            "usingLength"
+        ).innerText =
+        `Using Length: ${lengthBox.value}"`;
     }
 }
 
-
-
 function updateToleranceDisplay()
 {
-    const display =
-        document.getElementById(
-            "toleranceDisplay"
-        );
-
     try
     {
         let tolerance =
@@ -81,17 +76,19 @@ function updateToleranceDisplay()
                 toleranceBox.value
             );
 
-        display.innerText =
-            `Tolerance: ${toleranceBox.value} (${tolerance.toFixed(4)})`;
+        document.getElementById(
+            "toleranceDisplay"
+        ).innerText =
+        `Tolerance: ${toleranceBox.value} (${tolerance.toFixed(4)})`;
     }
     catch
     {
-        display.innerText =
-            "Tolerance: Invalid";
+        document.getElementById(
+            "toleranceDisplay"
+        ).innerText =
+        "Tolerance: Invalid";
     }
 }
-
-
 
 customLength.addEventListener(
     "input",
@@ -107,8 +104,6 @@ toleranceBox.addEventListener(
     "input",
     updateToleranceDisplay
 );
-
-
 
 function calculate()
 {
@@ -155,16 +150,94 @@ function calculate()
 
         let perfect =
             Math.sqrt(
-                length * length +
-                width * width
+                (length * length) +
+                (width * width)
             );
 
         document.getElementById(
             "difference"
         ).innerText =
-            `Difference: ${difference.toFixed(4)}"`;
+        `Difference: ${difference.toFixed(4)}"`;
 
         document.getElementById(
             "outSquare"
         ).innerText =
-            `Out Of Square: ${outSquare.toFixed(4)}"`;
+        `Out Of Square: ${outSquare.toFixed(4)}"`;
+
+        document.getElementById(
+            "perfectDiagonal"
+        ).innerText =
+        `Perfect Diagonal: ${perfect.toFixed(4)}"`;
+
+        let resultBox =
+            document.getElementById(
+                "resultBox"
+            );
+
+        if(difference <= tolerance)
+        {
+            resultBox.innerText =
+                "PASS";
+
+            resultBox.style.background =
+                "green";
+        }
+        else
+        {
+            resultBox.innerText =
+                "FAIL";
+
+            resultBox.style.background =
+                "red";
+        }
+    }
+    catch
+    {
+        alert(
+            "Please enter valid measurements."
+        );
+    }
+}
+
+function convertFraction()
+{
+    try
+    {
+        let result =
+            parseMeasurement(
+                document.getElementById(
+                    "fractionInput"
+                ).value
+            );
+
+        document.getElementById(
+            "decimalOutput"
+        ).innerText =
+            result.toFixed(4);
+    }
+    catch
+    {
+        alert(
+            "Invalid fraction."
+        );
+    }
+}
+
+function showCheatSheet()
+{
+    document.getElementById(
+        "cheatSheet"
+    ).style.display =
+        "block";
+}
+
+function closeCheatSheet()
+{
+    document.getElementById(
+        "cheatSheet"
+    ).style.display =
+        "none";
+}
+
+updateLengthDisplay();
+updateToleranceDisplay();
