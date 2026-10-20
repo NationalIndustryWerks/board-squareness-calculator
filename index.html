@@ -1,72 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board Squareness Calculator</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board Squareness Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="card">
 
-    <h1>BOARD SQUARENESS CALCULATOR</h1>
+<h1>BOARD SQUARENESS CALCULATOR</h1>
 
-    <label>Length</label>
-    <select id="length">
-        <option value="72">72"</option>
-        <option value="96">96"</option>
-        <option value="108">108"</option>
-        <option value="120">120"</option>
-        <option value="144">144"</option>
-        <option value="168">168"</option>
-        <option value="192">192"</option>
-    </select>
+<label>Length</label>
+<select id="length">
+<option value="72">72"</option>
+<option value="96">96"</option>
+<option value="108">108"</option>
+<option value="120">120"</option>
+<option value="144">144"</option>
+<option value="168">168"</option>
+<option value="192">192"</option>
+</select>
 
-    <label>Custom Length</label>
-    <input id="customLength" type="number">
+<label>Custom Length</label>
+<input id="customLength" type="number">
 
-    <p id="usingLength">Using Length: 72"</p>
+<p id="usingLength">Using Length: 72"</p>
 
-    <label>Width</label>
-    <select id="width">
-        <option value="48">48"</option>
-        <option value="54">54"</option>
-    </select>
+<label>Width</label>
+<select id="width">
+<option value="48">48"</option>
+<option value="54">54"</option>
+</select>
 
-    <label>Tolerance</label>
-    <input id="tolerance" value="3/32">
+<label>Tolerance</label>
+<input id="tolerance" value="3/32">
 
-    <p id="toleranceDisplay"></p>
+<p id="toleranceDisplay"></p>
 
-    <label>Diagonal 1</label>
-    <input id="diag1" placeholder="107 1/16">
+<label>Diagonal 1</label>
+<input id="diag1" placeholder="107 1/16">
 
-    <label>Diagonal 2</label>
-    <input id="diag2" placeholder="107 1/4">
+<label>Diagonal 2</label>
+<input id="diag2" placeholder="107 1/4">
 
-    <button onclick="calculate()">CALCULATE</button>
+<button onclick="calculate()">
+CALCULATE
+</button>
 
-    <button onclick="showHistory()">HISTORY</button>
+<button onclick="showHistory()">
+HISTORY
+</button>
 
-    <button onclick="clearHistory()">CLEAR HISTORY</button>
+<button onclick="clearHistory()">
+CLEAR HISTORY
+</button>
 
-    <div id="resultBox">READY</div>
+<div id="resultBox">
+READY
+</div>
 
-    <p id="difference"></p>
-    <p id="outSquare"></p>
-    <p id="perfectDiagonal"></p>
+<p id="difference"></p>
+<p id="outSquare"></p>
+<p id="perfectDiagonal"></p>
 
-    <hr>
+<hr>
 
-    <h2>Fraction → Decimal Converter</h2>
+<h2>Fraction → Decimal Converter</h2>
 
-    <input id="fractionInput" placeholder="107 1/16">
+<input id="fractionInput" placeholder="107 1/16">
 
-    <button onclick="convertFraction()">CONVERT</button>
+<button onclick="convertFraction()">
+CONVERT
+</button>
 
-    <p id="decimalOutput"></p>
+<p id="decimalOutput"></p>
 
+<hr>
+
+<button onclick="showCheatSheet()">
+TAPE CHEAT SHEET
+</button>
+
+</div>
+
+<!-- HISTORY MODAL -->
+
+<div id="historyModal" class="modal">
+<div class="modal-content">
+
+<span class="close" onclick="closeHistory()">
+&times;
+</span>
+
+<h2>Inspection History</h2>
+
+<table id="historyTable">
+
+<thead>
+<tr>
+<th onclick="sortHistory('date')">Date</th>
+<th onclick="sortHistory('length')">Length</th>
+<th onclick="sortHistory('width')">Width</th>
+<th>D1</th>
+<th>D2</th>
+<th onclick="sortHistory('difference')">Difference</th>
+<th onclick="sortHistory('outSquare')">OOS</th>
+<th onclick="sortHistory('result')">Result</th>
+</tr>
+</thead>
+
+<tbody id="historyContent">
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+<!-- CHEAT SHEET -->
+
+<div id="cheatSheet" class="modal">
+<div class="modal-content">
+
+<span class="close" onclick="closeCheatSheet()">
+&times;
+</span>
+
+<h2>Tape Measure Cheat Sheet</h2>
+
+<pre>
+1/32  = 0.0313
+1/16  = 0.0625
+3/32  = 0.0938
+1/8   = 0.1250
+5/32  = 0.1563
+3/16  = 0.1875
+7/32  = 0.2188
+1/4   = 0.2500
+9/32  = 0.2813
+5/16  = 0.3125
+11/32 = 0.3438
+3/8   = 0.3750
+13/32 = 0.4063
+7/16  = 0.4375
+15/32 = 0.4688
+1/2   = 0.5000
+17/32 = 0.5313
+9/16  = 0.5625
+19/32 = 0.5938
+5/8   = 0.6250
+21/32 = 0.6563
+11/16 = 0.6875
+23/32 = 0.7188
+3/4   = 0.7500
+25/32 = 0.7813
+13/16 = 0.8125
+27/32 = 0.8438
+7/8   = 0.8750
+29/32 = 0.9063
+15/16 = 0.9375
+31/32 = 0.9688
+</pre>
+
+</div>
 </div>
 
 <script src="script.js"></script>
