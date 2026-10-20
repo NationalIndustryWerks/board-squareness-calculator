@@ -1,77 +1,63 @@
-const customLength =
-document.getElementById("customLength");
+const customLength = document.getElementById("customLength");
+const lengthBox = document.getElementById("length");
+const toleranceBox = document.getElementById("tolerance");
 
-const lengthBox =
-document.getElementById("length");
-
-const toleranceBox =
-document.getElementById("tolerance");
-
-function parseMeasurement(value)
-{
+function parseMeasurement(value) {
     value = value.trim();
 
-    if(value === "")
-    {
-        throw new Error();
+    if (value === "") {
+        throw new Error("Empty value");
     }
 
-    if(value.includes("/"))
-    {
-        let parts = value.split(" ");
+    if (value.includes("/")) {
 
-        if(parts.length === 2)
-        {
-            let whole =
-                parseFloat(parts[0]);
+        const parts = value.split(" ");
 
-            let frac =
-                parts[1].split("/");
+        if (parts.length === 2) {
+            const whole = parseFloat(parts[0]);
+
+            const fraction = parts[1].split("/");
 
             return whole +
-                (
-                    parseFloat(frac[0]) /
-                    parseFloat(frac[1])
-                );
+                   (parseFloat(fraction[0]) /
+                    parseFloat(fraction[1]));
         }
 
-        let frac =
-            value.split("/");
+        const fraction = value.split("/");
 
-        return parseFloat(frac[0]) /
-               parseFloat(frac[1]);
+        return parseFloat(fraction[0]) /
+               parseFloat(fraction[1]);
     }
 
     return parseFloat(value);
 }
 
-function updateLengthDisplay()
-{
-    if(customLength.value !== "")
-    {
+function updateLengthDisplay() {
+
+    const usingLength =
+        document.getElementById("usingLength");
+
+    if (customLength.value !== "") {
+
         lengthBox.disabled = true;
 
-        document.getElementById(
-            "usingLength"
-        ).innerText =
-        `Using Length: ${customLength.value}"`;
+        usingLength.innerText =
+            `Using Length: ${customLength.value}"`;
     }
-    else
-    {
+    else {
+
         lengthBox.disabled = false;
 
-        document.getElementById(
-            "usingLength"
-        ).innerText =
-        `Using Length: ${lengthBox.value}"`;
+        usingLength.innerText =
+            `Using Length: ${lengthBox.value}"`;
     }
 }
 
-function updateToleranceDisplay()
-{
-    try
-    {
-        let tolerance =
+function updateToleranceDisplay() {
+
+    try {
+
+        const tolerance =
             parseMeasurement(
                 toleranceBox.value
             );
@@ -80,9 +66,9 @@ function updateToleranceDisplay()
             "toleranceDisplay"
         ).innerText =
         `Tolerance: ${toleranceBox.value} (${tolerance.toFixed(4)})`;
-    }
-    catch
-    {
+
+    } catch {
+
         document.getElementById(
             "toleranceDisplay"
         ).innerText =
@@ -105,91 +91,42 @@ toleranceBox.addEventListener(
     updateToleranceDisplay
 );
 
-function saveHistoryRecord(
-    length,
-    width,
-    d1,
-    d2,
-    difference,
-    outSquare,
-    result
-)
-{
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "boardHistory"
-            )
-        ) || [];
+function calculate() {
 
-    history.unshift({
-        date:
-            new Date().toLocaleString(),
+    try {
 
-        length,
-        width,
-        d1,
-        d2,
-
-        difference:
-            difference.toFixed(4),
-
-        outSquare:
-            outSquare.toFixed(4),
-
-        result
-    });
-
-    localStorage.setItem(
-        "boardHistory",
-        JSON.stringify(history)
-    );
-}
-
-function calculate()
-{
-    try
-    {
-        let length =
+        const length =
             customLength.value !== ""
-            ?
-            parseFloat(customLength.value)
-            :
-            parseFloat(lengthBox.value);
+            ? parseFloat(customLength.value)
+            : parseFloat(lengthBox.value);
 
-        let width =
+        const width =
             parseFloat(
-                document.getElementById(
-                    "width"
-                ).value
+                document.getElementById("width").value
             );
 
-        let tolerance =
+        const tolerance =
             parseMeasurement(
                 toleranceBox.value
             );
 
-        let d1 =
+        const d1 =
             parseMeasurement(
-                document.getElementById(
-                    "diag1"
-                ).value
+                document.getElementById("diag1").value
             );
 
-        let d2 =
+        const d2 =
             parseMeasurement(
-                document.getElementById(
-                    "diag2"
-                ).value
+                document.getElementById("diag2").value
             );
 
-        let difference =
+        const difference =
             Math.abs(d1 - d2);
 
-        let outSquare =
+        const outSquare =
             difference / 2;
 
-        let perfect =
+        const perfect =
             Math.sqrt(
                 (length * length) +
                 (width * width)
@@ -210,62 +147,47 @@ function calculate()
         ).innerText =
         `Perfect Diagonal: ${perfect.toFixed(4)}"`;
 
-        let result;
-        let resultBox =
-            document.getElementById(
-                "resultBox"
-            );
+        const resultBox =
+            document.getElementById("resultBox");
 
-        if(difference <= tolerance)
-        {
+        let result = "";
+
+        if (difference <= tolerance) {
+
             result = "PASS";
+            resultBox.innerText = "PASS";
+            resultBox.style.background = "green";
 
-            resultBox.innerText =
-                result;
+        } else {
 
-            resultBox.style.background =
-                "green";
-        }
-        else
-        {
             result = "FAIL";
-
-            resultBox.innerText =
-                result;
-
-            resultBox.style.background =
-                "red";
+            resultBox.innerText = "FAIL";
+            resultBox.style.background = "red";
         }
 
-        saveHistoryRecord(
+        saveHistory(
             length,
             width,
-            document.getElementById(
-                "diag1"
-            ).value,
-
-            document.getElementById(
-                "diag2"
-            ).value,
-
+            d1,
+            d2,
             difference,
             outSquare,
             result
         );
-    }
-    catch
-    {
+
+    } catch (error) {
+
         alert(
             "Please enter valid measurements."
         );
     }
 }
 
-function convertFraction()
-{
-    try
-    {
-        let result =
+function convertFraction() {
+
+    try {
+
+        const value =
             parseMeasurement(
                 document.getElementById(
                     "fractionInput"
@@ -275,117 +197,90 @@ function convertFraction()
         document.getElementById(
             "decimalOutput"
         ).innerText =
-            result.toFixed(4);
-    }
-    catch
-    {
-        alert(
-            "Invalid fraction."
-        );
+        value.toFixed(4);
+
+    } catch {
+
+        alert("Invalid fraction");
     }
 }
 
-function showCheatSheet()
-{
-    document.getElementById(
-        "cheatSheet"
-    ).style.display =
-        "block";
-}
+function saveHistory(
+    length,
+    width,
+    d1,
+    d2,
+    difference,
+    outSquare,
+    result
+) {
 
-function closeCheatSheet()
-{
-    document.getElementById(
-        "cheatSheet"
-    ).style.display =
-        "none";
-}
-
-function showHistory()
-{
-    let history =
+    const history =
         JSON.parse(
             localStorage.getItem(
                 "boardHistory"
             )
         ) || [];
 
-    let html = "";
+    history.unshift({
+        date: new Date().toLocaleString(),
+        length,
+        width,
+        d1,
+        d2,
+        difference: difference.toFixed(4),
+        outSquare: outSquare.toFixed(4),
+        result
+    });
 
-    if(history.length === 0)
-    {
-        html =
-        "No history saved.";
-    }
-    else
-    {
-        history.forEach(item =>
-        {
-            html += `
-            <div style="
-            border-bottom:1px solid #ccc;
-            margin-bottom:10px;
-            padding-bottom:10px;">
-
-            <strong>${item.date}</strong><br>
-
-            Length:
-            ${item.length}"<br>
-
-            Width:
-            ${item.width}"<br>
-
-            Diagonal 1:
-            ${item.d1}<br>
-
-            Diagonal 2:
-            ${item.d2}<br>
-
-            Difference:
-            ${item.difference}"<br>
-
-            Out Of Square:
-            ${item.outSquare}"<br>
-
-            Result:
-            <strong>${item.result}</strong>
-
-            </div>`;
-        });
-    }
-
-    document.getElementById(
-        "historyContent"
-    ).innerHTML =
-    html;
-
-    document.getElementById(
-        "historyModal"
-    ).style.display =
-    "block";
+    localStorage.setItem(
+        "boardHistory",
+        JSON.stringify(history)
+    );
 }
 
-function closeHistory()
-{
-    document.getElementById(
-        "historyModal"
-    ).style.display =
-    "none";
+function showHistory() {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "boardHistory"
+            )
+        ) || [];
+
+    if (history.length === 0) {
+        alert("No history saved.");
+        return;
+    }
+
+    let text = "";
+
+    history.forEach(item => {
+
+        text +=
+`${item.date}
+Length: ${item.length}
+Width: ${item.width}
+D1: ${item.d1}
+D2: ${item.d2}
+Difference: ${item.difference}
+Result: ${item.result}
+
+`;
+    });
+
+    alert(text);
 }
 
-function clearHistory()
-{
-    if(confirm(
-        "Clear all history?"
-    ))
-    {
+function clearHistory() {
+
+    if (confirm("Clear all history?")) {
+
         localStorage.removeItem(
             "boardHistory"
         );
 
-        alert(
-            "History cleared."
-        );
+        alert("History cleared.");
     }
 }
 
